@@ -3,6 +3,12 @@ const config = require("../config");
 const authDb = require("../data/authDb");
 
 module.exports.authenticationToken = async (req, res, next) => {
+
+    req.user = {
+        'user_name': 'AnonymousUser',
+        'id': -1
+    }
+
     try {
         const token = req.cookies.jwt;
         if (token) {
@@ -11,11 +17,10 @@ module.exports.authenticationToken = async (req, res, next) => {
                 req.user = user
                 next();
             });
-        }else{
+        } else {
             res.redirect("/login")
-            next();
         }
-        
+
     } catch (error) {
         res.redirect("/login")
     }

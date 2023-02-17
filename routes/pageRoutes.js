@@ -8,6 +8,10 @@ router.post("/login",pageController.login);
 
 // GET
 router.get("/",authMiddleware.authenticationToken, pageController.homePage);
+router.get("/patient/list",authMiddleware.authenticationToken, pageController.patientListPage);
+
+
+
 router.get("/login",pageController.loginPage);
 router.get("/logout",pageController.logout);
 

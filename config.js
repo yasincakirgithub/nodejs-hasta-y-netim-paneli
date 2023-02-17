@@ -3,7 +3,7 @@ const config = {
         host: "localhost",
         user: "root",
         password: "yasin123",
-        database: "nodedb"
+        database: "patientdb"
     },
     loginUrl : "/login",
     secretKey:"randomscretkey",

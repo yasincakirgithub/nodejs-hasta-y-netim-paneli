@@ -10,9 +10,20 @@ const { compareSync } = require("bcrypt");
 module.exports.homePage = async function (req, res) {
 
     try {
-        console.log("AKTİF KULLANICI ", req.user)
-        res.render("dashboard/index",{
-            req:req
+        res.render("dashboard/index", {
+            req: req
+        });
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+module.exports.patientListPage = async function (req, res) {
+
+    try {
+        res.render("patient/list", {
+            req: req
         });
     }
     catch (err) {
@@ -43,14 +54,13 @@ module.exports.login = async function (req, res) {
         let same = false;
 
         if (user) {
-            console.log("user.password", user.password)
+
             same = await compareSync(password, user.password);
         } else {
             error_messages.push('There is no such user')
         }
 
         if (same) {
-            console.log("same", same)
             const token = createToken(user.id);
 
             res.cookie('jwt', token, {
@@ -67,7 +77,7 @@ module.exports.login = async function (req, res) {
 
 
     } catch (error) {
-        console.log("hatalar",error)
+        console.log("hatalar", error)
         error_messages.push(String(error))
         res.render("auth/login", { "error_messages": error_messages });
     }
