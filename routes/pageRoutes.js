@@ -8,7 +8,7 @@ router.post("/login",pageController.login);
 
 // GET
 router.get("/",authMiddleware.authenticationToken, pageController.homePage);
-router.get("/patient/list",authMiddleware.authenticationToken, pageController.patientListPage);
+router.get("/medicalexam/add",authMiddleware.authenticationToken, pageController.medicalexamAddPage);
 
 
 

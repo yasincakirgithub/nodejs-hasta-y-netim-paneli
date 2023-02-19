@@ -1,0 +1,59 @@
+<div class="content-wrapper">
+
+    <section class="content-header">
+        <div class="container-fluid">
+
+        </div>
+    </section>
+
+    <section class="content">
+
+        <div class="card">
+            <div class="card-body" style="cursor: move;">
+                
+
+            <form method="post" action="/api/medicalexam/add">
+
+                <div class="row">
+
+                    <div class="col-3">
+                        <label for="filterCity">City</label>
+                        <select required id="filterCity" class="form-control filterCity" name="state">
+                            <% cities.forEach(city=> { %>
+                                <option value="<%= city.code %>"><%= city.name %></option>
+
+                                <% }) %>
+                        </select>
+
+                    </div>
+                    <div class="col-3">
+                        <label for="filterDistrict">District</label>
+                        <select required id="filterDistrict" class="form-control filterDistrict" name="state">
+                            <option value="-1" disabled="disabled">Please Select City Before</option>
+                        </select>
+
+                    </div>
+                    <div class="col-3">
+                        <label for="filterClinic">Clinic</label>
+                        <select required id="filterClinic" class="form-control filterClinic" name="state">
+                            <option value="-1" disabled="disabled">Please Select</option>
+                        </select>
+
+                    </div>
+
+                    <div class="col-3">
+
+                        <button class="btn btn-primary" type="submit">Save</button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+            </div>
+
+        </div>
+    </section>
+
+</div>

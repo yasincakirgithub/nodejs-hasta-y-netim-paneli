@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../layout/header') %>
+
+    <body class="sidebar-mini layout-fixed" cz-shortcut-listen="true" style="height: auto;">
+        
+        <%- include('../layout/preloader') %>
+        <%- include('../layout/nav') %>
+        <%- include('../layout/sidebar') %>
+
+        <%- include('../containers/medicalexam/add',{cities:cities,districts:districts}) %>
+        <%- include('../layout/footer') %>
+
+        <%- include('../layout/scripts') %>
+
+        
+    
+        <script>
+
+            let elementFilterCity = $('.filterCity')
+            let elementFilterDistrict = $('.filterDistrict')
+            let elementFilterClinic = $('.filterClinic')
+
+            let districtList = <%- JSON.stringify(districts) %>
+            let clinicList = <%- JSON.stringify(clinics) %>
+
+            $(document).ready(function() {
+                elementFilterCity.select2();
+                elementFilterDistrict.select2();
+                elementFilterClinic.select2();
+                elementFilterCity.change()
+            });
+            
+            elementFilterCity.on('change',function(){
+                let selectedCityCode = $(this).val()
+                let selectedCityName = $(this).find('option:selected').text();
+                filterDistrictByCity(selectedCityCode,selectedCityName)
+            })
+
+            elementFilterDistrict.on('change',function(){
+
+                let selectedDistrict = $(this).val()
+                let selectedCity =  $(this).find('option:selected').data("cityname")
+
+                console.log($(this).find('option:selected'))
+
+                $(clinicList).filter(function (i,n){
+
+                    console.log(n.district, n.city,selectedDistrict,selectedCity)
+
+                    if(n.district === selectedDistrict && n.city ===selectedCity){
+                        elementFilterClinic.append(`
+                            <option data-clinicId="${n.id}" value="${n.id}">
+                                ${n.name}
+                            </option>`)
+                    }
+                });
+
+                console.log(clinicList)
+
+            })
+
+            function filterDistrictByCity(cityCode,cityName){
+
+                elementFilterDistrict.select2("destroy")
+                elementFilterDistrict.html("")
+                $(districtList).filter(function (i,n){
+                    if(n.cityCode===cityCode){
+                        elementFilterDistrict.append(`
+                            <option data-cityName="${cityName}" data-cityCode="${cityCode}" value="${n.name}">
+                                ${n.name}
+                            </option>`)
+                    }
+                });
+                elementFilterDistrict.select2()
+                elementFilterDistrict.change()
+
+            }
+
+            
+
+
+        </script>
+
+    </body>
+
+</html>

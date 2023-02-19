@@ -1,8 +1,8 @@
-const pageDb = require("../data/pageDb");
 const authDb = require("../data/authDb");
+const pageDb = require("../data/pageDb");
+const cityDistrictDb = require("../data/cityDistrictDb");
 
 const config = require("../config")
-const loginUrl = config.loginUrl
 
 const jsonwebtoken = require('jsonwebtoken');
 const { compareSync } = require("bcrypt");
@@ -19,11 +19,15 @@ module.exports.homePage = async function (req, res) {
     }
 }
 
-module.exports.patientListPage = async function (req, res) {
+module.exports.medicalexamAddPage = async function (req, res) {
 
     try {
-        res.render("patient/list", {
-            req: req
+
+        res.render("medicalexam/add", {
+            req: req,
+            cities : await cityDistrictDb.getAllCities(),
+            districts: await cityDistrictDb.getAllDistricts(),
+            clinics : await pageDb.getActiveClinics()
         });
     }
     catch (err) {
